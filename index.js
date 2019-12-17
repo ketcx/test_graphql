@@ -1,19 +1,67 @@
-var express = require("express");
-var graphqlHTTP = require("express-graphql");
-var { buildSchema } = require("graphql");
+const express = require("express");
+const graphqlHTTP = require("express-graphql");
+const { buildSchema } = require("graphql");
+
+// data source
+const { courses } = require("./data.json");
 
 // Construct a schema, using GraphQL schema language
 var schema = buildSchema(`
   type Query {
-    hello: String
+    course(id: Int!): Course
+    courses(lang: String): [Course]
+  }
+
+  type Mutation
+  {
+    updateCourse(id: Int!, lang: String!): Course
+  }
+
+  type Course
+  {
+    id:Int,
+    title:String,
+    author: String,
+    language: String,
+    url:String
   }
 `);
 
+// Functions
+
+let getCourse = args => {
+  let id = args.id;
+  return courses.filter(course => {
+    return course.id == id;
+  })[0];
+};
+
+let getCourses = args => {
+  if (args.lang) {
+    console.log("Entro aqui " + args.lang);
+    let lang = args.lang;
+    return courses.filter(course => course.language === lang);
+  } else {
+    return courses;
+  }
+};
+
+let updateCourse = ({ id, lang }) => {
+  courses.map(course => {
+    if (course.id === id) {
+      console.log("Encontro coincidencia");
+      course.language = lang;
+      return course;
+    }
+  });
+  return courses.filter(course => course.id == id)[0];
+};
+
 // The root provides a resolver function for each API endpoint
 var root = {
-  hello: () => {
-    return "Hello world!";
-  }
+  course: getCourse,
+  courses: getCourses,
+  updateCourse: updateCourse
 };
 
 var app = express();

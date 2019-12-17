@@ -1,0 +1,25 @@
+{
+  "courses": [
+    {
+      "id": 1,
+      "title": "Rust language",
+      "author": "Jhon Galt",
+      "language": "rust",
+      "url": "twitter.com/niux"
+    },
+    {
+      "id": 2,
+      "title": "Typescript",
+      "author": "Jhon Galt",
+      "language": "javascript",
+      "url": "twitter.com/niux"
+    },
+    {
+      "id": 3,
+      "title": "Scala language",
+      "author": "Jhon Galt",
+      "language": "scala",
+      "url": "twitter.com/niux"
+    }
+  ]
+}
