@@ -49,7 +49,6 @@ let getCourses = args => {
 let updateCourse = ({ id, lang }) => {
   courses.map(course => {
     if (course.id === id) {
-      console.log("Encontro coincidencia");
       course.language = lang;
       return course;
     }
